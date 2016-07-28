@@ -798,7 +798,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 					<td style="font-weight: bolder;"><?php echo $langs->trans('TotalAmountCostWithCharge', 1); ?></td>
 					<td colspan="3">&nbsp;</td>
 					<td style="font-weight: bolder; text-align: right;">
-					<?php echo price($totalPRC_fruidoraix/$qty_ref); ?>
+					<?php echo price($PR_coef/$qty_ref); ?>
 					</td>
 				</tr>
         	    <?php
