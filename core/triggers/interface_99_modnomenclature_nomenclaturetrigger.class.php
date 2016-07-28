@@ -282,7 +282,7 @@ class Interfacenomenclaturetrigger
 		} else if ($object_type == 'facture') {
 			$facture = new Facture($db);
 			$facture->fetch($fk_parent);
-			$facture->updateline($object->id, $object->desc, $n->totalPV, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, Facture::TYPE_STANDARD, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
+			$facture->updateline($object->id, $object->desc, $n->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, Facture::TYPE_STANDARD, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
 		}
 	}
 	private function _deleteNomenclature(&$PDOdb, &$db, &$object, $object_type) {
