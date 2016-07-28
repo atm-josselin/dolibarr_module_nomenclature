@@ -260,8 +260,6 @@ class Interfacenomenclaturetrigger
 	private function _setPrice(&$PDOdb, &$object, $fk_parent, $object_type) {
 		global $db, $conf, $user, $langs;
 
-
-
 		if ($object->product_type > 1)
 			return 0;
 
@@ -289,8 +287,8 @@ class Interfacenomenclaturetrigger
 
 			$facture = new Facture($db);
 			$facture->fetch($fk_parent);
-
-			$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, Facture::TYPE_STANDARD, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
+			dol_syslog('sdfsdfdsfdsfs');
+			$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $facture->type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix,'',0,0,100);
 		}
 	}
 	private function _deleteNomenclature(&$PDOdb, &$db, &$object, $object_type) {
