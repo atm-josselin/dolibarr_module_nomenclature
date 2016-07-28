@@ -791,7 +791,6 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
                        <td style="font-weight: bolder; text-align: right;"><?php echo price($PR_coef); ?></td>
                        	<?php echo $formCore->hidden('price_buy', round($price_buy,2)); ?>
 		        </tr><?php
-		        var_dump($qty_ref);
 
 		        if($qty_ref!=1 && !empty($qty_ref)) {
 	        	?>
