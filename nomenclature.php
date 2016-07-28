@@ -783,6 +783,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 		if($user->rights->nomenclature->showPrice) {
 				$marge = TNomenclatureCoefObject::getMarge($PDOdb, $object, $object_type);
 				$PR_coef = $n->totalMO+$n->totalPRC;
+				$PR_Coef_fruidoraix = $n->totalMO+$totalPRC_fruidoraix;
 				$price_buy = $n->totalMO+$n->totalPRC;
 				$price_to_sell = $n->totalPV;
 				if(empty($qty_ref)) $qty_ref = $n->qty_reference;
@@ -790,7 +791,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 		        <tr class="liste_total" >
                        <td style="font-weight: bolder;"><?php echo $langs->trans('TotalAmountCostWithCharge', $qty_ref); ?></td>
                        <td colspan="3">&nbsp;</td>
-                       <td style="font-weight: bolder; text-align: right;"><?php echo price($PR_coef); ?></td>
+                       <td style="font-weight: bolder; text-align: right;"><?php echo price($PR_Coef_fruidoraix); ?></td>
                        	<?php echo $formCore->hidden('price_buy', round($price_buy,2)); ?>
 		        </tr><?php
 
@@ -800,7 +801,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 					<td style="font-weight: bolder;"><?php echo $langs->trans('TotalAmountCostWithCharge', 1); ?></td>
 					<td colspan="3">&nbsp;</td>
 					<td style="font-weight: bolder; text-align: right;">
-					<?php echo price($PR_coef/$qty_ref); ?>
+					<?php echo price(($PR_coef)/$qty_ref); ?>
 					</td>
 				</tr>
         	    <?php
