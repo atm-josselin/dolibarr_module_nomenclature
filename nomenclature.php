@@ -590,7 +590,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 										if(!empty($conf->of->enabled)) echo '<span class="priceOF"><br />'.price($det->charged_price_of).'</span>';
 									}
 									else{
-                                    	echo price($price_charge);
+                                    	echo price($price_charge*$det->qty);
 									}
                                 	echo '</td>';
 									echo '<td align="right" valign="bottom">';
