@@ -259,8 +259,14 @@ class Interfacenomenclaturetrigger
 	}
 	private function _setPrice(&$PDOdb, &$object, $fk_parent, $object_type) {
 		global $db, $conf, $user, $langs;
-		if ($object->subprice > 0 || $object->product_type > 1)
+
+
+
+		if ($object->product_type > 1)
 			return 0;
+
+			/*var_dump($object->subprice, $object->product_type);
+			exit;*/
 
 		$n = new TNomenclature();
 		$n->loadByObjectId($PDOdb, $object->id, $object_type, true, $object->fk_product, $object->qty);
@@ -280,9 +286,11 @@ class Interfacenomenclaturetrigger
 			$propal->fetch($fk_parent);
 			$propal->updateline($object->id, $n->totalPV, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRCMO);
 		} else if ($object_type == 'facture') {
+
 			$facture = new Facture($db);
 			$facture->fetch($fk_parent);
-			$facture->updateline($object->id, $object->desc, $n->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, Facture::TYPE_STANDARD, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
+
+			$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, Facture::TYPE_STANDARD, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
 		}
 	}
 	private function _deleteNomenclature(&$PDOdb, &$db, &$object, $object_type) {
