@@ -276,13 +276,13 @@ class Interfacenomenclaturetrigger
 			$commande = new Commande($db);
 			$commande->fetch($fk_parent);
 
-			$commande->updateline($object->id, $object->desc, $n->totalPV, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $object->date_start, $object->date_end, $object->product_type, 0, 0, $object->fk_fournprice, $n->totalPRCMO);
+			$commande->updateline($object->id, $object->desc, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $object->date_start, $object->date_end, $object->product_type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
 		}
 
 		else if ($object_type == 'propal') {
 			$propal = new Propal($db);
 			$propal->fetch($fk_parent);
-			$propal->updateline($object->id, $n->totalPV, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRCMO);
+			$propal->updateline($object->id, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
 		} else if ($object_type == 'facture') {
 
 			$facture = new Facture($db);

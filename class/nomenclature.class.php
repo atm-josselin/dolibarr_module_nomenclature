@@ -632,6 +632,8 @@ class TNomenclatureDet extends TObjetStd
 
 		$price_supplier = $child_price = 0;
 
+		$qty=1;
+
         $PDOdb->Execute("SELECT rowid, price, quantity FROM ".MAIN_DB_PREFIX."product_fournisseur_price
                 WHERE fk_product = ". $this->fk_product." AND quantity<=".$qty." ORDER BY quantity DESC LIMIT 1 ");
 
