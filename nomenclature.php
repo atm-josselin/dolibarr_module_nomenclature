@@ -472,6 +472,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
                        $class='';$total_produit = $total_mo  = 0;
                        $totalPRC_fruidoraix=0;
                        $totalPR_fruidoraix=0;
+                       $totalQty=0;
                        foreach($TNomenclatureDet as $k=>&$det) {
 
                            $class = ($class == 'impair') ? 'pair' : 'impair';
@@ -595,6 +596,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 									else{
                                     	echo price($price_charge*$det->qty);
                                     	$totalPRC_fruidoraix+=($price_charge*$det->qty);
+                                    	$totalQty+=$det->qty;
 									}
                                 	echo '</td>';
 									echo '<td align="right" valign="bottom">';
@@ -805,6 +807,16 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 					</td>
 				</tr>
         	    <?php
+		        }else {
+		        	?>
+		        	<tr class="liste_total" >
+					<td style="font-weight: bolder;"><?php echo $langs->trans('TotalAmountCostWithChargeFruidoraix', 1); ?></td>
+					<td colspan="3">&nbsp;</td>
+					<td style="font-weight: bolder; text-align: right;">
+					<?php echo price(($PR_coef)/$totalQty); ?>
+					</td>
+				</tr>
+		        	 <?php
 		        }
 
 		       if(!empty($conf->global->NOMENCLATURE_ACTIVATE_DETAILS_COSTS)) {
@@ -824,7 +836,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 
 				      }
 
-				      if($qty_ref!=1 && !empty($qty_ref)) {
+				     if($qty_ref!=1 && !empty($qty_ref)) {
 	      				?>
 	      				<tr class="liste_total" >
 	      					<td style="font-weight: bolder;"><?php echo $langs->trans('TotalAmountCostWithChargePMP', 1); ?></td>
@@ -843,7 +855,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 	      				</tr>
 
 	              	    <?php
-	      		     }
+	      		    }
 		        }
 
 		        if(empty($conf->global->NOMENCLATURE_HIDE_ADVISED_PRICE)) {
