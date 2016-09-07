@@ -276,19 +276,21 @@ class Interfacenomenclaturetrigger
 			$commande = new Commande($db);
 			$commande->fetch($fk_parent);
 
-			$commande->updateline($object->id, $object->desc, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $object->date_start, $object->date_end, $object->product_type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
+			//$commande->updateline($object->id, $object->desc, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $object->date_start, $object->date_end, $object->product_type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
+			$commande->updateline($object->id, $object->desc, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $object->date_start, $object->date_end, $object->product_type, 0, 0, $object->fk_fournprice, $n->totalPRCMO/$object->qty);
 		}
 
 		else if ($object_type == 'propal') {
 			$propal = new Propal($db);
 			$propal->fetch($fk_parent);
-			$propal->updateline($object->id, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
+			//$propal->updateline($object->id, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
+			$propal->updateline($object->id, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRCMO/$object->qty);
 		} else if ($object_type == 'facture') {
 
 			$facture = new Facture($db);
 			$facture->fetch($fk_parent);
-			dol_syslog('sdfsdfdsfdsfs');
-			$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $facture->type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix,'',0,0,100);
+			//$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $facture->type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix,'',0,0,100);
+			$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $facture->type, 0, 0, $object->fk_fournprice, $n->totalPRCMO/$object->qty,'',0,0,100);
 		}
 	}
 	private function _deleteNomenclature(&$PDOdb, &$db, &$object, $object_type) {

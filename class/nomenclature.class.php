@@ -96,7 +96,7 @@ class TNomenclature extends TObjetStd
 
 			$det->charged_price = empty($perso_price) ? $det->calculate_price * $coef : $perso_price * $coef_qty_price;
 			$totalPRC+= $det->charged_price;
-			$totalPRC_fruidoraix+=$det->charged_price*$det->qty;
+			//$totalPRC_fruidoraix+=$det->charged_price*$det->qty;
 
 			if(!empty($conf->global->NOMENCLATURE_ACTIVATE_DETAILS_COSTS)) {
 				$det->calculate_price_pmp = $det->getPrice($PDOdb, $det->qty * $coef_qty_price,'PMP');
@@ -117,7 +117,7 @@ class TNomenclature extends TObjetStd
 		}
 		$this->totalPR = $totalPR;
 		$this->totalPRC = $totalPRC;
-		$this->totalPRC_fruidoraix = $totalPRC_fruidoraix;
+		//$this->totalPRC_fruidoraix = $totalPRC_fruidoraix;
 
 		$this->totalPR_PMP = $totalPR_PMP;
 		$this->totalPRC_PMP = $totalPRC_PMP;
@@ -181,7 +181,7 @@ class TNomenclature extends TObjetStd
         $this->TNomenclatureWorkstationOriginal = $n->TNomenclatureWorkstation;
 
         if( (count($this->TNomenclatureDet)+count($this->TNomenclatureWorkstation) )==0 && (count($this->TNomenclatureDetOriginal) + count($this->TNomenclatureWorkstationOriginal))>0)
-	{
+		{
       	    $this->qty_reference = $n->qty_reference ;
 
             foreach($this->TNomenclatureDetOriginal as $k => &$det) {

@@ -582,7 +582,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 									}
 									else{
 										echo price($price/$det->qty);
-										$totalPR_fruidoraix+=(($price/$det->qty)*$det->qty);
+										$totalPR_fruidoraix+=$price;
 									}
 
 
@@ -594,8 +594,8 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
 										if(!empty($conf->of->enabled)) echo '<span class="priceOF"><br />'.price($det->charged_price_of).'</span>';
 									}
 									else{
-                                    	echo price($price_charge*$det->qty);
-                                    	$totalPRC_fruidoraix+=($price_charge*$det->qty);
+                                    	echo price($price_charge);
+                                    	$totalPRC_fruidoraix+=$price_charge;
                                     	$totalQty+=$det->qty;
 									}
                                 	echo '</td>';
@@ -618,7 +618,7 @@ function _fiche_nomenclature(&$PDOdb, &$n,&$product, $fk_object=0, $object_type=
                        <tr class="liste_total">
                            <td ><?php echo $langs->trans('Total'); ?></td>
                            <td colspan="<?php echo $colspan; ?>">&nbsp;</td>
-                           <td align="right"><?php echo price($totalPR_fruidoraix); ?></td>
+                           <td align="right"><?php //echo price($totalPR_fruidoraix); ?></td>
                            <td align="right"><?php echo price($totalPRC_fruidoraix); ?></td>
                            <td align="right"><?php /*echo price(round($total_produit_coef_final,2));*/ ?></td>
 
