@@ -17,17 +17,17 @@
  */
 
 /**
- * \file core/triggers/interface_99_modMyodule_nomenclaturetrigger.class.php
- * \ingroup nomenclature
- * \brief Sample trigger
- * \remarks You can create other triggers by copying this one
- * - File name should be either:
- * interface_99_modMymodule_Mytrigger.class.php
- * interface_99_all_Mytrigger.class.php
- * - The file must stay in core/triggers
- * - The class name must be InterfaceMytrigger
- * - The constructor method must be named InterfaceMytrigger
- * - The name property name must be Mytrigger
+ * 	\file		core/triggers/interface_99_modMyodule_nomenclaturetrigger.class.php
+ * 	\ingroup	nomenclature
+ * 	\brief		Sample trigger
+ * 	\remarks	You can create other triggers by copying this one
+ * 				- File name should be either:
+ * 					interface_99_modMymodule_Mytrigger.class.php
+ * 					interface_99_all_Mytrigger.class.php
+ * 				- The file must stay in core/triggers
+ * 				- The class name must be InterfaceMytrigger
+ * 				- The constructor method must be named InterfaceMytrigger
+ * 				- The name property name must be Mytrigger
  */
 
 /**
@@ -35,64 +35,69 @@
  */
 class Interfacenomenclaturetrigger
 {
-	private $db;
 
-	/**
-	 * Constructor
-	 *
-	 * @param DoliDB $db Database handler
-	 */
-	public function __construct($db) {
-		$this->db = $db;
+    private $db;
 
-		$this->name = preg_replace('/^Interface/i', '', get_class($this));
-		$this->family = "demo";
-		$this->description = "Triggers of this module are empty functions." . "They have no effect." . "They are provided for tutorial purpose only.";
-		// 'development', 'experimental', 'dolibarr' or version
-		$this->version = 'development';
-		$this->picto = 'nomenclature@nomenclature';
-	}
+    /**
+     * Constructor
+     *
+     * 	@param		DoliDB		$db		Database handler
+     */
+    public function __construct($db)
+    {
+        $this->db = $db;
 
-	/**
-	 * Trigger name
-	 *
-	 * @return string Name of trigger file
-	 */
-	public function getName() {
-		return $this->name;
-	}
+        $this->name = preg_replace('/^Interface/i', '', get_class($this));
+        $this->family = "demo";
+        $this->description = "Triggers of this module are empty functions."
+            . "They have no effect."
+            . "They are provided for tutorial purpose only.";
+        // 'development', 'experimental', 'dolibarr' or version
+        $this->version = 'development';
+        $this->picto = 'nomenclature@nomenclature';
+    }
 
-	/**
-	 * Trigger description
-	 *
-	 * @return string Description of trigger file
-	 */
-	public function getDesc() {
-		return $this->description;
-	}
+    /**
+     * Trigger name
+     *
+     * 	@return		string	Name of trigger file
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Trigger version
-	 *
-	 * @return string Version of trigger file
-	 */
-	public function getVersion() {
-		global $langs;
-		$langs->load("admin");
+    /**
+     * Trigger description
+     *
+     * 	@return		string	Description of trigger file
+     */
+    public function getDesc()
+    {
+        return $this->description;
+    }
 
-		if ($this->version == 'development') {
-			return $langs->trans("Development");
-		} elseif ($this->version == 'experimental')
+    /**
+     * Trigger version
+     *
+     * 	@return		string	Version of trigger file
+     */
+    public function getVersion()
+    {
+        global $langs;
+        $langs->load("admin");
 
-			return $langs->trans("Experimental");
-		elseif ($this->version == 'dolibarr')
-			return DOL_VERSION;
-		elseif ($this->version)
-			return $this->version;
-		else {
-			return $langs->trans("Unknown");
-		}
-	}
+        if ($this->version == 'development') {
+            return $langs->trans("Development");
+        } elseif ($this->version == 'experimental')
+
+                return $langs->trans("Experimental");
+        elseif ($this->version == 'dolibarr') return DOL_VERSION;
+        elseif ($this->version) return $this->version;
+        else {
+            return $langs->trans("Unknown");
+        }
+    }
 
 	/**
 	 * Function called when a Dolibarrr business event is done.
@@ -121,7 +126,7 @@ class Interfacenomenclaturetrigger
 			dol_syslog("Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id);
 		} elseif ($action == 'LINEPROPAL_INSERT') {
 			$this->_setPrice($PDOdb, $object, $object->fk_propal, 'propal');
-		} elseif ($action == 'LINEBILL_INSERT') {
+		} elseif ($action == 'LINEBILL_INSERT' && !empty($conf->global->NOMENCLATURE_USE_ON_INVOICE)) {
 			$this->_setPrice($PDOdb, $object, $object->fk_facture, 'facture');
 		} elseif ($action == 'LINEORDER_INSERT') {
 
@@ -257,57 +262,75 @@ class Interfacenomenclaturetrigger
 
 		return 0;
 	}
-	private function _setPrice(&$PDOdb, &$object, $fk_parent, $object_type) {
-		global $db, $conf, $user, $langs;
 
-		if ($object->product_type > 1)
-			return 0;
 
-			/*var_dump($object->subprice, $object->product_type);
-			exit;*/
+	private function _setPrice(&$PDOdb, &$object,$fk_parent,$object_type) {
+		global $db,$conf,$user,$langs;
 
-		$n = new TNomenclature();
-		$n->loadByObjectId($PDOdb, $object->id, $object_type, true, $object->fk_product, $object->qty);
+		if ($object->subprice >0 
+			|| !empty($conf->global->NOMENCLATURE_USE_SELL_PRICE_INSTEADOF_CALC)
+			|| $object->product_type>1 ) {
+					return 0;
+		}
+
+		$n = new TNomenclature;
+        	$n->loadByObjectId($PDOdb, $object->id , $object_type, true,$object->fk_product,$object->qty);
 		$n->setPrice($PDOdb, $object->qty, $object->id, $object_type);
 
-		if ($object_type == 'commande') {
-			// var_dump($n->totalPV, $object_type,$object);exit;
+
+		if (!empty($conf->global->NOMENCLATURE_USE_SELL_PRICE_INSTEADOF_CALC)) {
+			$sell_price_to_use=$object->subprice;
+		} else {
+			$sell_price_to_use=$n->totalPV;
+		}
+
+
+		if(empty($sell_price_to_use)) return 0;
+
+		if($object_type=='commande') {
+//		var_dump($n->totalPV, $object_type,$object);exit;
 
 			$commande = new Commande($db);
 			$commande->fetch($fk_parent);
 
-			//$commande->updateline($object->id, $object->desc, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $object->date_start, $object->date_end, $object->product_type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
-			$commande->updateline($object->id, $object->desc, $n->totalPV, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $object->date_start, $object->date_end, $object->product_type, 0, 0, $object->fk_fournprice, $n->totalPRCMO/(empty($object->qty)?1:$object->qty));
+			$commande->updateline($object->id,$object->desc,$sell_price_to_use,$object->qty,$object->remise_percent,$object->txtva,$object->txlocaltax1,$object->txlocaltax2,'HT',0,$object->date_start,$object->date_end,$object->product_type,0,0,$object->fk_fournprice,$n->totalPRCMO);
 		}
 
-		else if ($object_type == 'propal') {
+		else if($object_type=='propal') {
 			$propal = new Propal($db);
 			$propal->fetch($fk_parent);
-			//$propal->updateline($object->id, $n->subprice, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix);
-			$propal->updateline($object->id, $n->totalPV, $object->qty, $object->remise_percent, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, $object->desc, 'HT', 0, 0, 0, 0, $object->fk_fournprice, $n->totalPRCMO/(empty($object->qty)?1:$object->qty));
-		} else if ($object_type == 'facture') {
+			$propal->updateline($object->id,$sell_price_to_use,$object->qty,$object->remise_percent,$object->txtva,$object->txlocaltax1,$object->txlocaltax2,$object->desc,'HT',0,0,0,0,$object->fk_fournprice,$n->totalPRCMO);
+
+		}else if ($object_type == 'facture') {
 
 			$facture = new Facture($db);
 			$facture->fetch($fk_parent);
-			//$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $facture->type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix,'',0,0,100);
-			$facture->updateline($object->id, $object->desc, $object->subprice, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $facture->type, 0, 0, $object->fk_fournprice, $n->totalPRCMO/(empty($object->qty)?1:$object->qty),'',0,0,100);
+			$facture->updateline($object->id, $object->desc, $sell_price_to_use, $object->qty, $object->remise_percent, $object->date_start, $object->date_end, $object->txtva, $object->txlocaltax1, $object->txlocaltax2, 'HT', 0, $facture->type, 0, 0, $object->fk_fournprice, $n->totalPRC_fruidoraix,'',0,0,100);
 		}
-	}
-	private function _deleteNomenclature(&$PDOdb, &$db, &$object, $object_type) {
-		foreach ( $object->lines as $line ) {
-			if ($line->product_type == 9)
-				continue;
 
-			$sql = 'SELECT rowid FROM ' . MAIN_DB_PREFIX . 'nomenclature WHERE object_type = "' . $object_type . '" AND fk_object = ' . $line->id;
+	}
+
+	private function _deleteNomenclature(&$PDOdb, &$db, &$object, $object_type)
+	{
+		foreach ($object->lines as $line)
+		{
+			if ($line->product_type == 9) continue;
+			
+			$line_id = (!empty($line->id)?$line->id:$line->rowid);
+			$sql = 'SELECT rowid FROM '.MAIN_DB_PREFIX.'nomenclature WHERE object_type = "'.$object_type.'" AND fk_object = '.$line_id;
+			
 			$PDOdb->Execute($sql);
 
-			if ($PDOdb->Get_Recordcount() > 0) {
+			if ($PDOdb->Get_Recordcount() > 0)
+			{
 				$obj = $PDOdb->Get_line();
 
-				$db->query('DELETE FROM ' . MAIN_DB_PREFIX . 'nomenclature_workstation WHERE fk_nomenclature = ' . $obj->rowid);
-				$db->query('DELETE FROM ' . MAIN_DB_PREFIX . 'nomenclaturedet WHERE fk_nomenclature = ' . $obj->rowid);
-				$db->query('DELETE FROM ' . MAIN_DB_PREFIX . 'nomenclature WHERE rowid = ' . $obj->rowid);
+				$db->query('DELETE FROM '.MAIN_DB_PREFIX.'nomenclature_workstation WHERE fk_nomenclature = '.$obj->rowid);
+				$db->query('DELETE FROM '.MAIN_DB_PREFIX.'nomenclaturedet WHERE fk_nomenclature = '.$obj->rowid);
+				$db->query('DELETE FROM '.MAIN_DB_PREFIX.'nomenclature WHERE rowid = '.$obj->rowid);
 			}
 		}
+
 	}
+
 }
