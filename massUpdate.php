@@ -6,18 +6,18 @@
 	
 	dol_include_once('/product/class/product.class.php');
 	dol_include_once('/nomenclature/class/nomenclature.class.php');
-	
+
 	$action = GETPOST('action');
 	$make_it = GETPOST('make_it');
 	$fk_product = (int)GETPOST('fk_product');
 	$coef = (double)GETPOST('coef');
 	
 	$PDOdb = new TPDOdb;
-	
+
 	llxHeader();
 	dol_fiche_head();
 	print_fiche_titre($langs->trans('massUpdate'));
-	
+
 	$formCore = new TFormCore('auto','formN','post');
 	echo $formCore->hidden('action', 'update');
 	
@@ -37,7 +37,9 @@
 						FROM ".MAIN_DB_PREFIX."nomenclaturedet nd
 							LEFT JOIN ".MAIN_DB_PREFIX."nomenclature n ON (nd.fk_nomenclature = n.rowid)
 						WHERE nd.fk_product = ".$fk_product." AND n.object_type='product'");
-	
+
+		var_dump($Tab);
+
 		if(!empty($Tab)) {
 			
 			echo '<hr /><table class="border" width="100%">
@@ -81,7 +83,7 @@
 								SET qty = qty * ( (100 +  ".$coef.") / 100) 
 								WHERE fk_product = ".$fk_product );
 								
-					echo '<div class="info">Mise à jour effectuée</div>';
+					echo '<div class="info">'.$langs->trans('NomenclatureUpdateDone').'</div>';
 					
 			}
 			

@@ -1,5 +1,5 @@
 Module104580Name = Nomenclature
-Module104580Desc = Définissez votre composition de fabrication, relevé votre prix de revient
+Module104580Desc = Définissez votre composition de fabrication, relevez votre prix de revient
 
 ATMAbout = Ce module a été développé par <a href="http://www.atm-consulting.fr" target="_blank">ATM Consulting</a><br>Vous pouvez retrouver la documentation sur notre <a href="http://wiki.atm-consulting.fr/index.php/Accueil" target="_blank">wiki</a><br><br>Pour toute question technique ou retour, contactez-nous sur <a href="mailto:support@atm-consulting.fr">support@atm-consulting.fr</a><br><br>Pour toute question commerciale, contactez-nous sur <a href="mailto:contact@atm-consulting.fr">contact@atm-consulting.fr</a> ou au +33 9 77 19 50 70<br><br>Retrouvez nos autres modules sur <a href="http://www.dolistore.com/search.php?orderby=position&orderway=desc&search_query=atm&submit_search=Rechercher" target="_blank">Dolistore</a>
 
@@ -9,7 +9,7 @@ nomenclatureAbout = A propos du module nomenclature
 nomenclatureAllowFreeLine=Autoriser l'ajout de nomenclature sur un service ou ligne libre
 
 AddNomenclature=Ajouter une nomenclature
-AddProductNomenclature=Ajouter le produit
+AddProductNomenclature=Ajouter ce produit
 SaveNomenclature=Enregistrer
 nomenclatureIsDefault=Définir par défaut
 nomenclatureQtyReference=Qté de référence
@@ -45,7 +45,7 @@ ListUseNomenclaure=Liste des nomenclatures utilisant ce produit
 
 AddCoef=Ajouter un coefficient
 ModifyCoef=Modifier un coefficient
-CreateCoef=Renseigner son libellé et son code de base de donnée (pas d'espace n'y de caractère accentué) ainsi que son taux
+CreateCoef=Renseigner son libellé et son code de base de donnée (pas d'espace ni de caractère accentué) ainsi que son taux
 NomenclatureCreateLabel=Libellé : 
 NomenclatureCreateCode=Code type : 
 NomenclatureCreateTx=Taux :
@@ -63,18 +63,18 @@ nomenclatureApplyAllCoefOnPriceError=Impossible de mettre les prix à jour, le s
 
 SaveAll=Sauvegarder les modifications
 PseudoNomenclature=Nomenclature virtuelle du produit 
-PseudoNomenclatureInfo=Nomenclature du produit, pas de la ligne. Le premier niveau sera rattachée à la ligne à sauvegarde, les niveaux inférieurs seront des nomenclatures commune de produits
+PseudoNomenclatureInfo=Nomenclature du produit, pas de la ligne. Le premier niveau sera rattachée à la ligne à la sauvegarde, les niveaux inférieurs seront des nomenclatures commune de produits
 
 EditLine=Editer la ligne
-ThisProductCreateAnInfinitLoop=Ce produit ne peut être ajouté car il créé une boucle infinie
+ThisProductCreateAnInfinitLoop=Ce produit ne peut être ajouté car il crée une boucle infinie
 ThisIsAnInfinitLoop=Il y a une boucle infinie dans ce produit, merci de corriger l'appel erroné
-ThereIsTooLevelHere=Trop de niveau a afficher (boucle infinie ?)
+ThereIsTooLevelHere=Trop de niveaux à afficher (boucle infinie ?)
 
-nomenclatureJustMP=Permettre la liaison uniquement avec des matières première
+nomenclatureJustMP=Permettre la liaison uniquement avec des matières premières.
 
 CoefGenericSaveForSpecific=Coefficient générique. Sauvegardez pour rendre spécifique à cet objet.
 
-NonLocalNomenclature=Nomenclature chargée depuis le produit, sauvegardez pour créér une nomenclature locale
+NonLocalNomenclature=Nomenclature chargée depuis le produit, sauvegardez pour créer une nomenclature locale
 
 NOMENCLATURE_ACTIVATE_DETAILS_COSTS=Activer les prix de revient détaillés
 PricePA=Budget, prix d'achat fixe défini sur la fiche article
@@ -86,19 +86,20 @@ priceMO_OF=Réel, analyse des OF sur la période
 TotalMO_OF=Total M.O. Réel
 massUpdate=Mettre les nomenclature à jour en masse
 massUpdateMenu=Nomenclature mise à jour en masse
-nomenclatureSpeedSelectClick=Nomenclature Rapide, sélection au clic
-PercentUP=Augmentation en %
+nomenclatureSpeedSelectClick=Nomenclature rapide, sélection au clic
+PercentUP=Augmenter de %
 ShowImpact=Montrer l'impact
 QtyAfter=Qté après
 MakeIt=Faire la mise à jour
+NomenclatureUpdateDone=Mise à jour effectuée
 
 NOMENCLATURE_TAKE_PRICE_FROM_CHILD_FIRST=Utiliser le prix de la nomenclature enfant avant le prix d'achat pour le calcul
-NOMENCLATURE_PERSO_PRICE_HAS_TO_BE_CHARGED=Le prix personnalisé d'un composant est un déboursé
+NOMENCLATURE_PERSO_PRICE_HAS_TO_BE_CHARGED=Le prix personnalisé d'un composant est un prix déboursé
 NOMENCLATURE_PERSO_PRICE_APPLY_QTY=Ce déboursé prend en compte la quantité de la ligne
 NOMENCLATURE_HIDE_ADVISED_PRICE=Masquer la ligne de prix conseillé dans la nomenclature
-NOMENCLATURE_USE_ON_INVOICE=Utilise les cout de reviens de nomenclature avec les factures
+NOMENCLATURE_USE_ON_INVOICE=Utiliser les coûts de revient de nomenclature avec les factures
 NOMENCLATURE_USE_SELL_PRICE_INSTEADOF_CALC=Forcer l'utilsation du prix de vente plutot que le cout margé (lors de l'ajout d'une ligne propal/commande/facture)
-NOMENCLATURE_USE_QTYREF_TO_ONE=Toujorus utilisé la quanté de référence à 1 pour le calcul du cout de reviens
+NOMENCLATURE_USE_QTYREF_TO_ONE=Toujours utiliser la quantité de référence de 1 pour le calcul du cout de revient
 
 CantAddProductBecauseOfAnInfiniteLoop=Ce produit ne peut être ajouté car cela créé une boucle infinie
 SetPriceInfiniteLoop=Boucle infinie détectée dans la récupération du prix

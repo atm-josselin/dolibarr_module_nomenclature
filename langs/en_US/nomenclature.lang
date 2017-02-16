@@ -1,7 +1,105 @@
-Module104580Name = nomenclature
-Module104580Desc = nomenclature Descripion
+Module104580Name = Nomenclature
+Module104580Desc = Define your fabrication process
 
 ATMAbout = This module has been developed by <a href="http://www.atm-consulting.fr" target="_blank">ATM Consulting</a><br>You can find the documentation on our <a href="http://wiki.atm-consulting.fr/index.php/Accueil" target="_blank">wiki</a><br><br>For any question or feedback, contact us on <a href="mailto:support@atm-consulting.fr">support@atm-consulting.fr</a><br><br>For any commercial question, contact us on <a href="mailto:contact@atm-consulting.fr">contact@atm-consulting.fr</a> or at +33 9 77 19 50 70<br><br>Find our other modules on <a href="http://www.dolistore.com/search.php?orderby=position&orderway=desc&search_query=atm&submit_search=Rechercher" target="_blank">Dolistore</a>
 
-nomenclatureSetup = nomenclature module setup
-nomenclatureAbout = About nomenclature
+nomenclatureSetup = Nomenclature module setup
+nomenclatureAbout = About Nomenclature
+
+nomenclatureAllowFreeLine=Authorize adding nomenclatures to a service or a free line
+
+AddNomenclature=Add a nomenclature
+AddProductNomenclature=Add this product
+SaveNomenclature=Save
+nomenclatureIsDefault=Define as default
+nomenclatureQtyReference=Reference qty
+
+WillUseProductWorkstationIfNotSpecified=Will use global product definition if not specified
+QtyPrepare=Preparation time
+QtyFabrication=Fabrication time
+nb_days_before_beginning=Delay before start
+Worstations=Workstations
+AmountCost=Cost price
+AmountCostWithCharge=Cost price with charge
+TotalAmountCostWithCharge=Cost price with charge for %s copies
+TotalAmountCostWithChargePMP=Theoretical cost price with charge for %s copies
+TotalAmountCostWithChargeOF=Actual cost price with charge for %s copies
+AmountCostWithChargeCustom=Personal cost
+PriceConseil=Advised selling price (%s %% margin) for %s copies
+
+NomenclatureSaved=Nomenclature saved
+WorkstationAlreadyAssociated=This workstation is already associated with this nomenclature
+
+NomenclatureLineSaved=Specific nomenclature saved
+DeleteThisNomenclature=Delete this nomenclature
+NomenclatureDeleted=Nomenclature deleted
+addWorkstation=Add workstation
+AddWorkstation=Add workstation
+
+ApplyNomenclaturePrice=Apply selling price
+ApplyNewCoefToObjectLine=Apply the coefficients to the lines
+CloneNomenclatureFromProduct=Import nomenclature 
+NomenclatureCloned=Nomenclature(s) imported
+
+ListUseNomenclaure=List of nomenclatures using this product
+
+AddCoef=Add a coefficient
+ModifyCoef=Modify a coefficient
+CreateCoef=Give its label, its database code (no space and no accented characters) and its rate
+NomenclatureCreateLabel=Label : 
+NomenclatureCreateCode=Type code : 
+NomenclatureCreateTx=Rate :
+
+NomenclatureSuccessAddCoef=Added a new coefficient
+NomenclatureDeleteSuccess=Deleted the nomenclature
+
+NomenclatureErrorAddCoef=Error : impossible to add a coefficient.
+NomenclatureErrorAddCoefDoublon=Error : the given code alread exists in the database.
+NomenclatureErrorCantDelete=Error : impossible to delete this record because it has child links.
+
+CoefList=List of coefficients
+nomenclatureCoefUpdated=Coefficients updated
+nomenclatureApplyAllCoefOnPriceError=Impossible to update prices, the status of the document is not draft
+
+SaveAll=Save modifications
+PseudoNomenclature=Virtual nomenclature of the product
+PseudoNomenclatureInfo=Nomenclature of the product, not of the line. The top level will be attached to the line when saving, the lower levels will be common product nomenclatures.
+
+EditLine=Edit line
+ThisProductCreateAnInfinitLoop=This product cannot be add because it create an infinite loop
+ThisIsAnInfinitLoop=There is an infinite loop in this product, plus correct the wrong call
+ThereIsTooLevelHere=Too much levels to display (infinite loop?)
+
+nomenclatureJustMP=Only enable linking with raw material
+
+CoefGenericSaveForSpecific=Generic coefficient. Save to make it specific to this object.
+
+NonLocalNomenclature=Nomenclature loaded from the product, save to create a local nomenclature
+
+NOMENCLATURE_ACTIVATE_DETAILS_COSTS=Activate detailed cost prices
+PricePA=Budget, fixed buying prince defined in the product card
+PricePMP=Theoretical, weighted average price (WAP) of the product
+PriceOF=Actual, from Manufacturing Orders analysis during the period
+TotalPricePMP=Theoretical raw material total
+TotalPriceOF=Actual raw material total
+priceMO_OF=Actual, from Manufacturing Orders analysis during the period
+TotalMO_OF=Real MO total
+massUpdate=Mass-update nomenclatures
+massUpdateMenu=Nomenclature mass-update
+nomenclatureSpeedSelectClick=Quick nomenclature, select by clicking
+PercentUP=Increase by %
+ShowImpact=Show impact
+QtyAfter=Qty after
+MakeIt=Update
+NomenclatureUpdateDone=Update done
+
+NOMENCLATURE_TAKE_PRICE_FROM_CHILD_FIRST=Use child nomenclature price before the buying price for the calculation
+NOMENCLATURE_PERSO_PRICE_HAS_TO_BE_CHARGED=The personal cost of a component is a spent price
+NOMENCLATURE_PERSO_PRICE_APPLY_QTY=This spent price takes the quantity of the line into account
+NOMENCLATURE_HIDE_ADVISED_PRICE=Mask advised price line in the nomenclature
+NOMENCLATURE_USE_ON_INVOICE=Use nomenclature cost prices in bills
+NOMENCLATURE_USE_SELL_PRICE_INSTEADOF_CALC=Force use of the selling price instead of the cost with margin (when adding a line in commercial proposition/order/bill)
+NOMENCLATURE_USE_QTYREF_TO_ONE=Always use a reference quantity of 1 for the cost price calculation
+
+CantAddProductBecauseOfAnInfiniteLoop=This product cannot be added because it creates an infinite loop.
+SetPriceInfiniteLoop=Infinite loop detected in the recovery of the price
