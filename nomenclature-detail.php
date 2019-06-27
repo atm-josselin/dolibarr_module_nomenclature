@@ -195,6 +195,25 @@ print_table($TProduct, $TWorkstation, $object_type);
 dol_fiche_end();
 llxFooter();
 
+function getDet($line){
+    global $PDOdb;
+    $res = array();
+    $tempNome = new TNomenclature;
+    if ($tempNome->loadByObjectId($PDOdb,$line->fk_product,'product')){ // Besoin de récursif
+        foreach ($tempNome->TNomenclatureDet as $det) {
+            $det->qty *= $line->qty;
+            foreach (getDet($det) as $item) {
+                array_push($res,$item);
+            }
+        }
+    }
+    else { // Produit simple
+        array_push($res,$line);
+    }
+    return $res;
+}
+
+
 function _getDetails(&$object, $object_type) {
     global $db, $PDOdb, $conf;
     dol_include_once('/subtotal/class/subtotal.class.php');
@@ -207,19 +226,19 @@ function _getDetails(&$object, $object_type) {
             if($line->product_type == 9) continue;
 
             $nomenclature = new TNomenclature;
-            $nomenclature->loadByObjectId($PDOdb, $line->id, $object_type, true, $line->fk_product, $line->qty);
-
-            $nomenclature->fetchCombinedDetails($PDOdb);
-
-            foreach($nomenclature->TNomenclatureDetCombined as $fk_product => $det) {
-
-                if(! isset($TProduct[$fk_product])) {
-                    $TProduct[$fk_product] = $det;
-                }
+            $res = getDet($line);
+            foreach ($res as $r){
+                if (! array_key_exists($r->fk_product,$TProduct)) $TProduct[$r->fk_product] = $r;
                 else {
-                    $TProduct[$fk_product]->qty += $det->qty;
+                    $TProduct[$r->fk_product]->qty += $r->qty;
                 }
             }
+
+            //TODO : voir compatibilité Workstation
+
+            $nomenclature->loadByObjectId($PDOdb,$line->fk_product,'product');
+
+            $nomenclature->fetchCombinedDetails($PDOdb);
 
             foreach($nomenclature->TNomenclatureWorkstationCombined as $fk_ws => $ws) {
                 if(isset($TWorkstation[$fk_ws])) {
@@ -251,12 +270,11 @@ function _getDetails(&$object, $object_type) {
                 $firstParentTitleId = $TTitleKeys[0];
 
                 $nomenclature = new TNomenclature;
-                $nomenclature->loadByObjectId($PDOdb, $line->id, $object_type, true, $line->fk_product, $line->qty);
-
-                $nomenclature->fetchCombinedDetails($PDOdb);
-                $nomenclature->setPrice($PDOdb, $line->qty, null, 'propal');
-
-                foreach($nomenclature->TNomenclatureDetCombined as $fk_product => $det) {
+                $res = getDet($line);
+                foreach ($res as $det){
+                    $nomenclature->loadByObjectId($PDOdb,$det->fk_product,'product');
+                    $nomenclature->fetchCombinedDetails($PDOdb);
+                    $nomenclature->setPrice($PDOdb, $det->qty, null, 'propal');
                     unset($det->TChamps, $det->TConstraint);
 
                     $p = new Product($db);
@@ -264,8 +282,9 @@ function _getDetails(&$object, $object_type) {
                     $p->load_stock();
 
                     $det->type = $p->type;
-                    $det->unit = $object->getValueFrom('c_units', $det->fk_unit, 'label');
-		    $det->qty = $det->qty*$line->qty;
+                    if (! $det->unit = $object->getValueFrom('c_units', $det->fk_unit, 'label')){
+                        $object->getValueFrom('c_units', $p->fk_unit, 'label');
+                    }
                     if(! isset($TProduct[$firstParentTitleId]['products'][$det->fk_product])) $TProduct[$firstParentTitleId]['products'][$det->fk_product] = $det;
                     else {
                         $TProduct[$firstParentTitleId]['products'][$det->fk_product]->qty += $det->qty;
@@ -290,7 +309,7 @@ function _getDetails(&$object, $object_type) {
                     if(! isset($TProduct[$firstParentTitleId]['total']['pv'])) $TProduct[$firstParentTitleId]['total']['pv'] = $det->pv;
                     else $TProduct[$firstParentTitleId]['total']['pv'] += $det->pv;
                 }
-                uasort($TProduct[$firstParentTitleId]['products'], 'sortByProductType');
+                if (! is_null($TProduct[$firstParentTitleId]['products'])) uasort($TProduct[$firstParentTitleId]['products'], 'sortByProductType');
 
                 foreach($nomenclature->TNomenclatureWorkstationCombined as $fk_ws => $ws) {
                     if(isset($TWorkstation[$fk_ws])) {
@@ -302,6 +321,7 @@ function _getDetails(&$object, $object_type) {
                         $TWorkstation[$fk_ws] = $ws;
                     }
                 }
+
             }
         }
     }
@@ -325,7 +345,6 @@ function _getDetails(&$object, $object_type) {
         }
         $TProduct['gl_total'] = $TTotal;
     }
-
     return array($TProduct, $TWorkstation);
 }
 
